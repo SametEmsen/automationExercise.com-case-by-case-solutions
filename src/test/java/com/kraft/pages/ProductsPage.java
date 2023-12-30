@@ -18,6 +18,16 @@ public class ProductsPage extends BasePage{
     public WebElement searchedProductsText;
     @FindBy(xpath = "//a[contains(@href,'details')]")
     public List<WebElement> viewProductList;
+
+    @FindBy (css = "[data-product-id='1']")
+    public WebElement firstPruductAddToCartBtn;
+
+    @FindBy(css = "[class=\"btn btn-success close-modal btn-block\"]")
+    public WebElement continueShoppingBtn;
+
+    @FindBy(xpath = "//u[.='View Cart']")
+    public WebElement viewCartBtn;
+
     public void viewProduct(String productName){
         WebElement element = Driver.get().findElement(By.xpath("//h2[.='" + productName + "']/ancestor::div[@class=\"product-image-wrapper\"]/div[@class=\"choose\"]"));
         BrowserUtils.clickWithJS(element);
@@ -27,4 +37,13 @@ public class ProductsPage extends BasePage{
         BrowserUtils.clickWithJS(searchBtn);
 
     }
+
+    public void hoverAndClickChoosenProduct(int productNumber){
+        WebElement element = Driver.get().findElement(By.xpath("(//a[@data-product-id="+productNumber+"])[1]"));
+        BrowserUtils.hover(element);
+        BrowserUtils.waitFor(1);
+        BrowserUtils.clickWithJS(element);
+
+    }
+
 }
