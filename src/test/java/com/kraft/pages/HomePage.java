@@ -6,8 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HomePage extends BasePage{
-    @FindBy(id = "footer")
-    public WebElement footer;
+
     @FindBy(xpath = "//h2[.='Subscription']")
     public WebElement subscriptionTextElement;
 

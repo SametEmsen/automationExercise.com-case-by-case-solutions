@@ -4,6 +4,7 @@ import com.kraft.utilities.BrowserUtils;
 import com.kraft.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
@@ -13,6 +14,8 @@ public abstract class BasePage {
     public BasePage(){
         PageFactory.initElements(Driver.get(),this);
     }
+    @FindBy(id = "footer")
+    public WebElement footer;
 
     public void navigateToElement(String elementName){
         WebElement element = Driver.get().findElement(By.xpath("//a[contains(text(),'"+elementName+"')]"));
