@@ -11,31 +11,36 @@ import org.testng.Assert;
 import java.util.List;
 
 public abstract class BasePage {
-    public BasePage(){
-        PageFactory.initElements(Driver.get(),this);
+    public BasePage() {
+        PageFactory.initElements(Driver.get(), this);
     }
+
     @FindBy(id = "footer")
     public WebElement footer;
 
-    public void navigateToElement(String elementName){
-        WebElement element = Driver.get().findElement(By.xpath("//a[contains(text(),'"+elementName+"')]"));
+
+    public void navigateToElement(String elementName) {
+        WebElement element = Driver.get().findElement(By.xpath("//a[contains(text(),'" + elementName + "')]"));
         BrowserUtils.clickWithJS(element);
     }
-    public void verifyLoggedIn(){
+
+    public void verifyLoggedIn() {
         Assert.assertTrue(Driver.get().findElement(By.xpath("//a[contains(text(),'Logged')]")).isDisplayed());
     }
-    public void verifyPage(String url,String navigatedElement){
-        String actualPage=Driver.get().getCurrentUrl();
-        String expectedPage=url;
 
-        if (!actualPage.equals(expectedPage)){
+    public void verifyPage(String url, String navigatedElement) {
+        String actualPage = Driver.get().getCurrentUrl();
+        String expectedPage = url;
+
+        if (!actualPage.equals(expectedPage)) {
             Driver.get().navigate().refresh();
             navigateToElement(navigatedElement);
-            actualPage=Driver.get().getCurrentUrl();
+            actualPage = Driver.get().getCurrentUrl();
         }
-            Assert.assertEquals(actualPage,expectedPage);
+        Assert.assertEquals(actualPage, expectedPage);
     }
-    public void verifyProductInfoDisplayed(){        //BUNUN YERİ BURASI MI?
+
+    public void verifyProductInfoDisplayed() {        //BUNUN YERİ BURASI MI?
         List<WebElement> elementList = Driver.get().findElements(By.cssSelector("[class=\"product-information\"]>p,[class=\"product-information\"]>span,[class=\"product-information\"]>h2"));
         System.out.println("elementList.size() = " + elementList.size());
         for (WebElement element : elementList) {
@@ -43,6 +48,12 @@ public abstract class BasePage {
         }
     }
 
-
+    public void closeAdd() {
+        if (Driver.get().findElements(By.id("google_esf")).size() > 0) {
+            Driver.get().switchTo().frame("google_esf");
+            Driver.get().switchTo().frame("aswift_5");
+            Driver.get().findElement(By.id("dismiss-button")).click();
+        }
+    }
 
 }
