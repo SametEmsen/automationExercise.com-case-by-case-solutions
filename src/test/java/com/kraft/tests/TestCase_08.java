@@ -32,7 +32,7 @@ public class TestCase_08 extends TestBase{
 
         extentLogger.info("User is landed to product detail page");
         expectedUrl="https://automationexercise.com/product_details/1";
-        productsPage.verifyPageViaElement(driver.getCurrentUrl(), expectedUrl);
+        productsPage.verifyPageViaUrl(expectedUrl);
 
         extentLogger.info("Verify that detail detail is visible: product name, category, price, availability, condition, brand");
         productsPage.verifyProductInfoDisplayed();

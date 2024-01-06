@@ -53,19 +53,38 @@ public abstract class BasePage {
         }
         Assert.assertEquals(actualPage, expectedPage);
     }
+    /**
+     * if there is an add pops-up this method refreshes the page
+     * and navigate back to expected page via expectedUrl
+     * then assert the page is expected one
+     *
+     * @param url
+     */
+    public void verifyPageViaUrl(String url) {
+        String actualPage = Driver.get().getCurrentUrl();
+        String expectedPage = url;
+
+        if (!actualPage.equals(expectedPage)) {
+            Driver.get().navigate().refresh();
+            Driver.get().navigate().to(expectedPage);
+            actualPage = Driver.get().getCurrentUrl();
+        }
+        Assert.assertEquals(actualPage, expectedPage);
+    }
 
     /**
      * verify products with listed items in for loop
      * if list is empty method gives us a message to consul
      */
     public void verifyProductInfoDisplayed() {
-        List<WebElement> elementList = Driver.get().findElements(By.cssSelector("[class=\"product-information\"]>p,[class=\"product-information\"]>span,[class=\"product-information\"]>h2"));
-        if (elementList.size() > 0) {
+        List<WebElement> elementList = Driver.get().findElements(By.cssSelector("[cclass=\"product-information\"]>p,[class=\"product-information\"]>span,[class=\"product-information\"]>h2"));
+        if (!(elementList.size() == 6)) {
+            System.out.println("elementList.size() = " + elementList.size() + ", check for locators");
+            Assert.assertTrue(elementList.size()==6);       // for list is operational or not
+        } else {
             for (WebElement element : elementList) {
                 Assert.assertTrue(element.isDisplayed());
             }
-        } else {
-            System.out.println("elementList.size() = " + elementList.size() + ", check for locators");
         }
     }
 
