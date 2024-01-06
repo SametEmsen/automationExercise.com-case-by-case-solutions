@@ -27,7 +27,7 @@ public class TestCase_09 extends TestBase{
 
         extentLogger.info("Verify user is navigated to ALL PRODUCTS page successfully");
         String expectedUrl="https://automationexercise.com/products";
-        homePage.verifyPage(expectedUrl,"Products");
+        homePage.verifyPageViaElement(expectedUrl,"Products");
 
         extentLogger.info("Enter product name in search input and click search button");
         productsPage.searhProduct("Men Tshirt");

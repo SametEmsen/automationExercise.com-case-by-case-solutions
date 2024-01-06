@@ -18,7 +18,10 @@ public abstract class BasePage {
     @FindBy(id = "footer")
     public WebElement footer;
 
-
+    /**
+     * this method navigate to expected element name (!!case-sensitive)(e.g. "Cart","Products")
+     * @param elementName
+     */
     public void navigateToElement(String elementName) {
         WebElement element = Driver.get().findElement(By.xpath("//a[contains(text(),'" + elementName + "')]"));
         BrowserUtils.clickWithJS(element);
@@ -28,7 +31,14 @@ public abstract class BasePage {
         Assert.assertTrue(Driver.get().findElement(By.xpath("//a[contains(text(),'Logged')]")).isDisplayed());
     }
 
-    public void verifyPage(String url, String navigatedElement) {
+    /**
+     * if there is an add pops-up this method refreshes the page
+     * and navigate back to expected page via navigate Element name (e.g. "Cart","Products")
+     * then assert the page is expected one
+     * @param url
+     * @param navigatedElement
+     */
+    public void verifyPageViaElement(String url, String navigatedElement) {
         String actualPage = Driver.get().getCurrentUrl();
         String expectedPage = url;
 
@@ -40,7 +50,7 @@ public abstract class BasePage {
         Assert.assertEquals(actualPage, expectedPage);
     }
 
-    public void verifyProductInfoDisplayed() {        //BUNUN YERİ BURASI MI?
+    public void verifyProductInfoDisplayed() {
         List<WebElement> elementList = Driver.get().findElements(By.cssSelector("[class=\"product-information\"]>p,[class=\"product-information\"]>span,[class=\"product-information\"]>h2"));
         System.out.println("elementList.size() = " + elementList.size());
         for (WebElement element : elementList) {

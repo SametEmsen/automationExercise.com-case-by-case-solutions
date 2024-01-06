@@ -25,14 +25,14 @@ public class TestCase_08 extends TestBase{
 
         extentLogger.info("Verify user is navigated to ALL PRODUCTS page successfully");
         String expectedUrl="https://automationexercise.com/products";
-        homePage.verifyPage(expectedUrl,"Products");
+        homePage.verifyPageViaElement(expectedUrl,"Products");
 
         extentLogger.info("Click on 'View Product' of first product");
         productsPage.viewProductList.get(0).click();
 
         extentLogger.info("User is landed to product detail page");
         expectedUrl="https://automationexercise.com/product_details/1";
-        productsPage.verifyPage(driver.getCurrentUrl(), expectedUrl);
+        productsPage.verifyPageViaElement(driver.getCurrentUrl(), expectedUrl);
 
         extentLogger.info("Verify that detail detail is visible: product name, category, price, availability, condition, brand");
         productsPage.verifyProductInfoDisplayed();
