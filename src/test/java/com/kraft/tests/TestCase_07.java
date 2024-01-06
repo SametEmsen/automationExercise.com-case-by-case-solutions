@@ -26,7 +26,7 @@ public class TestCase_07 extends TestBase{
 
         extentLogger.info("Verify user is navigated to test cases page successfully");
         String expectedUrl="https://automationexercise.com/test_cases";
-        homePage.verifyPage(expectedUrl,"Test Cases");
+        homePage.verifyPageViaElement(expectedUrl,"Test Cases");
 
         extentLogger.pass("Passed..!!!");
     }

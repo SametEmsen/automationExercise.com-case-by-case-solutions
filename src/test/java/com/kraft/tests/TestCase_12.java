@@ -1,6 +1,5 @@
 package com.kraft.tests;
 
-import com.kraft.pages.BasePage;
 import com.kraft.pages.HomePage;
 import com.kraft.pages.ProductsPage;
 import com.kraft.pages.ViewCartPage;
@@ -30,7 +29,7 @@ public class TestCase_12 extends TestBase{
         homePage.navigateToElement("Products");
 
         extentLogger.info("Hover over first product and click 'Add to cart'");
-        productsPage.verifyPage("https://automationexercise.com/products","Products");
+        productsPage.verifyPageViaElement("https://automationexercise.com/products","Products");
         BrowserUtils.waitFor(2);
         productsPage.hoverAndClickChoosenProduct(1);
 
