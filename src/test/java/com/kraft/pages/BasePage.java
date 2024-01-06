@@ -79,7 +79,7 @@ public abstract class BasePage {
     public void verifyProductInfoDisplayed() {
         List<WebElement> elementList = Driver.get().findElements(By.cssSelector("[cclass=\"product-information\"]>p,[class=\"product-information\"]>span,[class=\"product-information\"]>h2"));
         if (!(elementList.size() == 6)) {
-            System.out.println("elementList.size() = " + elementList.size() + ", check for locators");
+            System.out.println("elementList.size() = " + elementList.size() + ",  check for locators");
             Assert.assertTrue(elementList.size()==6);       // for list is operational or not
         } else {
             for (WebElement element : elementList) {
