@@ -17,9 +17,12 @@ public abstract class BasePage {
 
     @FindBy(id = "footer")
     public WebElement footer;
+    @FindBy(xpath = "//h2[.='Account Deleted!']")
+    public WebElement accountDeletedText;
 
     /**
      * this method navigate to expected element name (!!case-sensitive)(e.g. "Cart","Products")
+     *
      * @param elementName
      */
     public void navigateToElement(String elementName) {
@@ -35,6 +38,7 @@ public abstract class BasePage {
      * if there is an add pops-up this method refreshes the page
      * and navigate back to expected page via navigate Element name (e.g. "Cart","Products")
      * then assert the page is expected one
+     *
      * @param url
      * @param navigatedElement
      */
@@ -50,12 +54,26 @@ public abstract class BasePage {
         Assert.assertEquals(actualPage, expectedPage);
     }
 
+    /**
+     * verify products with listed items in for loop
+     * if list is empty method gives us a message to consul
+     */
     public void verifyProductInfoDisplayed() {
         List<WebElement> elementList = Driver.get().findElements(By.cssSelector("[class=\"product-information\"]>p,[class=\"product-information\"]>span,[class=\"product-information\"]>h2"));
-        System.out.println("elementList.size() = " + elementList.size());
-        for (WebElement element : elementList) {
-            Assert.assertTrue(element.isDisplayed());
+        if (elementList.size() > 0) {
+            for (WebElement element : elementList) {
+                Assert.assertTrue(element.isDisplayed());
+            }
+        } else {
+            System.out.println("elementList.size() = " + elementList.size() + ", check for locators");
         }
+    }
+
+    /***
+     * this method assert that "ACCOUNT DELETED!" text is visible
+     */
+    public void verifyAccountDeleted() {
+        Assert.assertTrue(accountDeletedText.isDisplayed());
     }
 
     public void closeAdd() {

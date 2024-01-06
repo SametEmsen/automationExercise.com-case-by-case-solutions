@@ -1,5 +1,8 @@
 package com.kraft.tests;
 
+import com.kraft.pages.HomePage;
+import com.kraft.pages.LoginPage;
+import com.kraft.utilities.ConfigurationReader;
 import com.kraft.utilities.WebDriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,54 +10,61 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TestCase_02 {
-    WebDriver driver= WebDriverFactory.getDriver("chrome");
+public class TestCase_02 extends TestBase {
 
-    /**
+
+    /**!!! Before this test case you must create an account manually for this task because
+     * in the end you will delete this account!!!!
      *
-
-     1. Launch browser
-     2. Navigate to url 'http://automationexercise.com'
-     3. Verify that home page is visible successfully
-     4. Click on 'Signup / Login' button
-     5. Verify 'Login to your account' is visible
-     6. Enter correct email address and password
-     7. Click 'login' button
-     8. Verify that 'Logged in as username' is visible
-     9. Click 'Delete Account' button
-     10. Verify that 'ACCOUNT DELETED!' is visible
-
-
+     * 1. Launch browser
+     * 2. Navigate to url 'http://automationexercise.com'
+     * 3. Verify that home page is visible successfully
+     * 4. Click on 'Signup / Login' button
+     * 5. Verify 'Login to your account' is visible
+     * 6. Enter correct email address and password
+     * 7. Click 'login' button
+     * 8. Verify that 'Logged in as username' is visible
+     * 9. Click 'Delete Account' button
+     * 10. Verify that 'ACCOUNT DELETED!' is visible
      */
     @Test
-    public void test02_loginViaCorrectInput() throws InterruptedException {
-        driver.get("http://automationexercise.com");
+    public void test02_loginViaCorrectInput()  {
+        HomePage homePage = new HomePage();
+        LoginPage loginPage = new LoginPage();
 
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals(actualUrl,"https://automationexercise.com/");
+        extentLogger = report.createTest("Test Case 2: Login User with correct email and password");
 
-        WebElement signUp = driver.findElement(By.xpath("//i[@class='fa fa-lock']/.."));
-        signUp.click();
-        Thread.sleep(1000);
+        extentLogger.info(" Navigate to url 'http://automationexercise.com'");
+        driver.get(ConfigurationReader.get("url"));
 
-        WebElement text = driver.findElement(By.tagName("h2"));
-        Assert.assertTrue(text.isDisplayed());
-        Thread.sleep(1000);
+        extentLogger.info("Verify that home page is visible successfully");
+        driver.get(ConfigurationReader.get("url"));
+        Assert.assertEquals(driver.getCurrentUrl(), "https://automationexercise.com/");
 
-        WebElement emailInput = driver.findElement(By.cssSelector("[data-qa=\"login-email\"]"));
-        emailInput.sendKeys("ahmet123@ahmet.com");
-        Thread.sleep(1000);
+        extentLogger.info(" Click on 'Signup / Login' button");
+        homePage.navigateToElement("Login");
 
-        WebElement passInput = driver.findElement(By.cssSelector("[data-qa='login-password']"));
-        passInput.sendKeys("123.asdf");
-        Thread.sleep(1000);
+        extentLogger.info("Verify 'Login to your account' is visible");
+        loginPage.verifyLoginAccountVisible();
 
-        WebElement loginBtn = driver.findElement(By.cssSelector("[data-qa=\"login-button\"]"));
-        loginBtn.click();
-        Thread.sleep(1000);
+        extentLogger.info("Enter correct email address and password");
+        loginPage.loginEmailInbox.sendKeys(ConfigurationReader.get("email0"));
+        loginPage.loginPasswordInbox.sendKeys(ConfigurationReader.get("password0"));
 
-        WebElement loggedText = driver.findElement(By.xpath("//i[@class=\"fa fa-user\"]/.."));
-        Assert.assertTrue(loggedText.isDisplayed());
+        extentLogger.info("Click 'login' button");
+        loginPage.loginBtn.click();
+
+        extentLogger.info("Verify that 'Logged in as username' is visible");
+        homePage.verifyLoggedIn();
+
+        extentLogger.info("Click 'Delete Account' button");
+        homePage.navigateToElement("Delete Account");
+
+        extentLogger.info("Verify that 'ACCOUNT DELETED!' is visible");
+        homePage.verifyPageViaElement("https://automationexercise.com/delete_account","Delete");
+        homePage.verifyAccountDeleted();
+
+
 
 
     }
